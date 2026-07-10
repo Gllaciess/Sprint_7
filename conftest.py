@@ -4,23 +4,6 @@ from constants import Urls
 
 
 @pytest.fixture
-def create_courier():
-    from helpers.helpers import register_new_courier_and_return_login_password
-    login, password, first_name = register_new_courier_and_return_login_password()
-    yield login, password, first_name
-
-    if login:
-
-        response = requests.post(
-            f"{Urls.BASE_URL}{Urls.LOGIN_URL}",
-            data={"login": login, "password": password}
-        )
-        if response.status_code == 200:
-            courier_id = response.json().get("id")
-            if courier_id:
-                requests.delete(f"{Urls.BASE_URL}{Urls.COURIER_URL}/{courier_id}")
-
-@pytest.fixture
 def delete_courier():
     courier_ids = []
 
