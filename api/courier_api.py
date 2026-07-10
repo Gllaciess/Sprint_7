@@ -23,7 +23,12 @@ def register_new_courier_and_return_login_password():
 
     if response.status_code == 201:
         return login, password, first_name
-    return None, None, None
+    
+    raise Exception(
+        f"Не удалось создать курьера. "
+        f"Статус: {response.status_code}, "
+        f"Тело ответа: {response.text}"
+    )
 
 
 @allure.step("Создание данных для купьера")
