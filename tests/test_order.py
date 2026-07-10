@@ -3,6 +3,7 @@ import pytest
 import requests
 from constants import Urls
 from helpers.helpers import generate_random_string
+from api.order_api import create_order
 
 
 @allure.feature('Создание заказа')
@@ -29,10 +30,8 @@ class TestOrder:
             "color": color
         }
 
-        response = requests.post(
-            f"{Urls.BASE_URL}{Urls.ORDER_URL}",
-            json=payload
-        )
+        response = create_order(payload)
+        
 
         assert response.status_code == 201
         assert "track" in response.json()
