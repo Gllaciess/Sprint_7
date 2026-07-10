@@ -3,7 +3,7 @@ import pytest
 import requests
 from constants import Urls
 from helpers.helpers import generate_random_string
-from api.courier_api import create_courier, login_courier, delete_courier_by_id
+from api.courier_api import create_courier, create_courier_with_payload, login_courier, delete_courier_by_id
 
 
 #Создать курьера
@@ -17,16 +17,7 @@ class TestCourier:
         password = generate_random_string(10)
         first_name = generate_random_string(10)
 
-        payload = {
-            "login": login,
-            "password": password,
-            "firstName": first_name
-        }
-
-        response = requests.post(
-            f"{Urls.BASE_URL}{Urls.COURIER_URL}",
-            data=payload
-        )
+        response = create_courier(login, password, first_name)
 
         assert response.status_code == 201
         assert response.json() == {"ok": True}
@@ -47,10 +38,7 @@ class TestCourier:
         }
         del payload[field_to_remove]
 
-        response = requests.post(
-            f"{Urls.BASE_URL}{Urls.COURIER_URL}",
-            data=payload
-        )
+        response = create_courier_with_payload(payload)
 
         assert response.status_code == 400
         assert "Недостаточно данных" in response.text
@@ -62,25 +50,10 @@ class TestCourier:
         password = generate_random_string(10)
         first_name = generate_random_string(10)
 
-        payload = {
-            "login": login,
-            "password": password,
-            "firstName": first_name
-        }
-
-
-        response1 = requests.post(
-            f"{Urls.BASE_URL}{Urls.COURIER_URL}",
-            data=payload
-        )
+        response1 = create_courier(login, password, first_name)
         assert response1.status_code == 201
 
-
-        response2 = requests.post(
-            f"{Urls.BASE_URL}{Urls.COURIER_URL}",
-            data=payload
-        )
-
+        response2 = create_courier(login, password, first_name)
         assert response2.status_code == 409
         assert "Этот логин уже используется" in response2.text
 

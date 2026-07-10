@@ -58,3 +58,11 @@ def delete_courier_by_id(courier_id):
     )
 
 
+@allure.step("Создание курьера с произвольным payload")
+def create_courier_with_payload(payload):
+    return requests.post(
+        f"{Urls.BASE_URL}{Urls.COURIER_URL}",
+        data=payload
+    )
+
+
