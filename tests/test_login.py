@@ -48,7 +48,7 @@ class TestLogin:
         )
 
         assert response.status_code == 404
-        assert "Учетная запись не найдена" in response.text
+        assert response.json()["message"] == "Учетная запись не найдена"
 
         delete_courier(login, password)
 
@@ -73,7 +73,7 @@ class TestLogin:
         )
 
         assert response.status_code == 400
-        assert "Недостаточно данных" in response.text
+        assert response.json()["message"] == "Недостаточно данных для входа"
 
         delete_courier(login, password)
 

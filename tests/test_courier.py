@@ -41,7 +41,8 @@ class TestCourier:
         response = create_courier_with_payload(payload)
 
         assert response.status_code == 400
-        assert "Недостаточно данных" in response.text
+        assert response.json()["message"] == "Недостаточно данных для создания учетной записи"
+
 
     @allure.title('Создание курьера с уже существующим логином')
     @allure.story('Негативный сценарий')
@@ -55,7 +56,7 @@ class TestCourier:
 
         response2 = create_courier(login, password, first_name)
         assert response2.status_code == 409
-        assert "Этот логин уже используется" in response2.text
+        assert response2.json()["message"] == "Этот логин уже используется. Попробуйте другой."
 
         delete_courier(login, password)
 
