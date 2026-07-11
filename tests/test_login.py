@@ -1,7 +1,5 @@
 import allure
 import pytest
-import requests
-from constants import Urls
 from helpers.helpers import generate_random_string
 from api.courier_api import register_new_courier_and_return_login_password, login_courier, delete_courier_by_id
 

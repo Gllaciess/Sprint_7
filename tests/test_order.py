@@ -1,7 +1,5 @@
 import allure
 import pytest
-import requests
-from constants import Urls
 from helpers.helpers import generate_random_string
 from api.order_api import create_order
 

@@ -1,9 +1,7 @@
 import allure
 import pytest
-import requests
-from constants import Urls
 from helpers.helpers import generate_random_string
-from api.courier_api import create_courier, create_courier_with_payload, login_courier, delete_courier_by_id
+from api.courier_api import create_courier, create_courier_with_payload
 
 
 #Создать курьера
