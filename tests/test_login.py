@@ -20,11 +20,9 @@ class TestLogin:
             "password": password
         }
 
-        response = requests.post(
-            f"{Urls.BASE_URL}{Urls.LOGIN_URL}",
-            data=payload
-        )
+        response = login_courier(login, password)
 
+        
         assert response.status_code == 200
         assert "id" in response.json()
         assert response.json()["id"] is not None
@@ -42,10 +40,7 @@ class TestLogin:
             "password": "wrong_password"
         }
 
-        response = requests.post(
-            f"{Urls.BASE_URL}{Urls.LOGIN_URL}",
-            data=payload
-        )
+        response = login_courier(login, "wrong_password")
 
         assert response.status_code == 404
         assert response.json()["message"] == "Учетная запись не найдена"
@@ -67,10 +62,7 @@ class TestLogin:
         }
         del payload[field_to_remove]
 
-        response = requests.post(
-            f"{Urls.BASE_URL}{Urls.LOGIN_URL}",
-            data=payload
-        )
+        response = login_courier(payload.get("login"), payload.get("password"))
 
         assert response.status_code == 400
         assert response.json()["message"] == "Недостаточно данных для входа"
