@@ -22,4 +22,4 @@ def delete_courier():
     for courier_id in courier_ids:
         requests.delete(f"{Urls.BASE_URL}{Urls.COURIER_URL}/{courier_id}")
 
-
+        
